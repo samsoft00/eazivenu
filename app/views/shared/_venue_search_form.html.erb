@@ -1,0 +1,24 @@
+<%= form_tag search_venue_path, method: :get, class: 'venue_search_form' do %>
+  <div class="form-group row no-padding text-center col-md-8 col-md-offset-2">
+    <div class="col-md-4">
+      <%= text_field_tag :location, params[:location], placeholder: "Where do you want to host your event", class: "form-control input-lg" %>
+    </div>
+    <div class="col-md-3">
+      <%= number_field_tag :number_of_guest, params[:number_of_guest], placeholder: "Number of Guest", class: "form-control input-lg" %>  
+    </div>
+    <div class="col-md-3">
+      <%= select_tag("category", options_for_select(Category.all().collect{|cat| [cat.name,cat.id]}), html_options = {:class => "form-control input-lg"}) %>
+    </div>
+    <div class="col-md-2">
+      <%= button_tag(type: :submit, class: "btn btn-lg btn-success") do %>
+        <i class="fa fa-search"></i> Search Venue
+      <% end %>
+    </div>
+  	
+    <p class="form-group row col-md-12">
+      <%= link_to "List a Venue today", new_venue_path, class: "btn btn-link pull-left" %>
+    </p>        
+
+  </div>
+
+<% end %>

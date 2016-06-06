@@ -1,0 +1,14 @@
+<div class="form-group nopadding row file-uploader col-md-12 nested-fields">
+  <div class="col-md-10">
+    <!-- <a class="thumbnail"> -->
+    <% if !f.object.new_record? %>
+      <%= attachment_image_tag(f.object, :thumbnail, :fill, 250, 150) %>
+    <% else %>
+	    <!-- </a>   -->
+	  	<%= f.attachment_field :thumbnail, class: "filestyle"  %>
+	  <% end %>
+  </div>
+  <div class="col-md-2">
+    <%= link_to_remove_association '<i class="fa fa-minus-circle" aria-hidden="true"></i>'.html_safe, f, :class => ' remove-btn' %>
+  </div>
+</div>

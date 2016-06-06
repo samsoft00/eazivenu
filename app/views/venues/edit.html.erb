@@ -1,0 +1,17 @@
+<%- model_class = Venue -%>
+<div class="page-header text-center">
+	<div class="container">
+  	<h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
+  </div>
+</div>
+
+<div id="main" class="main-container">
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2" style="background-color:#fff;padding:30px;border-radius:5px">
+				<%= render :partial => 'form' %>
+			</div>
+		</div>
+	</div>
+</div>

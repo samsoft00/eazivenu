@@ -1,0 +1,74 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>Welcome to EasiVenu</h1>
+    <p>Book a Venue in Lagos Now... Fastest way to locate your dreams.</p>
+		<!-- Search form -->
+    <%= render partial: 'shared/venue_search_form' %>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+   </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+    </div>
+  </div>
+
+  <hr>
+</div>
+
+<style type="text/css">
+  .thumbnail {
+       display: block; 
+       padding: 0px; 
+       margin-bottom: 0px; 
+       line-height: 0; 
+       background-color: #fff; 
+       border: none; 
+       border-radius: 0px;
+  }  
+</style>
+
+<div class="container">
+  <div class="row">
+      <div class="row">
+          <div class="col-md-9">
+              <h3>A Venue <span class="attention">Where You Need It</span></h3>
+          </div>
+          <div class="col-md-3">
+              <!-- Controls -->
+              <div class="controls pull-right hidden-xs">
+                 <a class="left fa fa-chevron-left btn btn-success" href="#carousel-example"
+                      data-slide="prev"></a><a class="right fa fa-chevron-right btn btn-success" href="#carousel-example" data-slide="next"></a>
+              </div>
+          </div>
+      </div>
+      <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+              <div class="item active">
+                  <div class="row">
+                      <% Venue.limit(4).each do |venue| %>
+                        <div class="col-sm-3">
+                            <%= render 'shared/venue_box', venue: venue %>
+                        </div>
+                      <% end %>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

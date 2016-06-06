@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>EasVenu</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+    <link type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "EasiVenu", root_path, class: "navbar-brand" %>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add Venue'.html_safe, new_venue_path %></li>
+            <% if user_signed_in? %>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <%= current_user.email %><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "My Venue",  venues_path %></li>
+                  <% if current_user.is_admin? %>
+                    <li><%= link_to "Dashboard",  dashboard_path %></li>
+                  <% end %>
+                  <!-- <li><a href="#">Something else here</a></li> -->
+                  <li role="separator" class="divider"></li>
+                  <li><%= link_to "Sign Out",  destroy_user_session_path, method: :delete %></li>
+                </ul>
+              </li>
+            <% else %>
+              <li><%= link_to '<i class="fa fa-sign-in" aria-hidden="true"></i> Sign In'.html_safe, new_user_session_path %></li>
+            <% end %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>    
+
+		<%= yield %>
+
+      <hr>
+      <div class="container">
+        <footer>
+          <p>&copy; 2015 Company, Inc.</p>
+        </footer>
+      </div>
+    </div> <!-- /container -->
+    
+    <script type="text/javascript">
+    
+      $('#sS').multipleSelect({
+          selectAll: true,
+          placeholder: "Select Venue Type"
+      });
+
+      $('.summernote_min').summernote({ 
+        height: 200,
+        tabsize: 2,
+        toolbar: [
+          ['fontsize', ['fontsize']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ],
+        codemirror: { // codemirror options
+          theme: 'cerulean'
+        },
+        disableDragAndDrop: false 
+      });      
+    
+    </script>
+
+  </body>
+</html>

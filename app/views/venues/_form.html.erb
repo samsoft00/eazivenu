@@ -1,0 +1,194 @@
+<style type="text/css">
+  .thumbnail {
+       display: block; 
+       padding: 0px; 
+       margin-bottom: 20px; 
+       line-height: 0; 
+       background-color: #fff; 
+       border: none; 
+       border-radius: 0px; 
+       -webkit-transition: all .2s ease-in-out; 
+      -o-transition: all .2s ease-in-out;
+       transition: all .2s ease-in-out; 
+  }  
+</style>
+
+<%= form_for @venue, :html => { :class => "venue" } do |f| %>
+
+  <% if @venue.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@venue.errors.count, "error") %> prohibited this venue from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @venue.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="row col-lg-12">
+    <p class="lead"><i class="fa fa-bars" aria-hidden="true"></i> Venue Datails</p>
+  </div>
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <%= f.text_field :name, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :state_id, :class => 'control-label' %>
+        <%= f.select(:state_id, options_for_select(State.all().collect{|cat| [cat.state,cat.id]}), {include_blank: 'Select State'}, html_options = {:class => "form-control", id: "state_select"}) %>         
+      </div>
+      
+      <div class="col-md-6">
+        <%= f.label :local_govt_area_id, :class => 'control-label' %>
+        <%= f.select(:local_govt_area_id, {}, {include_blank: 'Select Local Govt. Area'}, html_options = {:class => "form-control"}) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address, :class => 'control-label' %>
+    <%= f.text_area :address, :class => 'form-control', size: 'x2' %>
+  </div>
+  <% if current_user %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.label :phone, :class => 'control-label' %>
+          <%= f.text_field :phone, :class => 'form-control' %>
+        </div>
+        <div class="col-md-6">
+          <%= f.label :price, :class => 'control-label' %>
+          <%= f.text_field :price, :class => 'form-control' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label :phone, :class => 'control-label' %>
+          <%= f.text_field :phone, :class => 'form-control' %>
+        </div>
+        <div class="col-md-4">
+          <%= f.label :price, :class => 'control-label' %>
+          <%= f.text_field :price, :class => 'form-control' %>
+        </div>
+        <div class="col-md-4">
+          <%= f.label :email, :class => 'control-label' %>
+          <%= f.text_field :email, :class => 'form-control' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :category, :class => 'control-label' %><br/>
+        <%= f.select_tag("category[]", options_for_select(Category.all().collect{|cat| [cat.name,cat.id]}), html_options = {:class => "form-control", multiple:"multiple", id: "sS"}) %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :capacity, :class => 'control-label' %>
+        <%= f.text_field :capacity, :class => 'form-control' %>        
+      </div>
+    </div>
+  </div>
+  <hr/>
+
+  <% if user_signed_in? %>
+    <!-- Association Fields -->
+    <div class="row col-lg-12">
+      <p class="lead"><i class="fa fa-suitcase" aria-hidden="true"></i> Add Facilities</p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered">
+        <thead>
+          <tr>
+            <th align="center" style="text-align:center;text-transform: uppercase;">Key</th>
+            <th align="center" style="text-align:center;text-transform: uppercase;">Value</th>
+            <th width="10%" style="text-align:center">
+              <%= link_to_add_association '<div class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></div>'.html_safe, f, :facilities, :"data-association-insertion-node" => "tbody", :"data-association-insertion-method" => "append" %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>  
+          <%= f.fields_for :facilities do |builder| %>
+            <%= render 'facility_fields', :f => builder %>
+          <% end %>        
+        </tbody>
+      </table>
+    </div>
+
+    <hr/> 
+    <div class="row col-md-12">
+      <p class="lead"><i class="fa fa-picture-o" aria-hidden="true"></i> Add Venue Image</p>
+    </div>
+    <div class="form-group nopadding row col-lg-12">
+      <div class="col-md-3">
+        <p>Photos for your Venue (This will be your cover photo )</p>      
+      </div>
+      <div class="col-md-9">
+        <div class="form-group row no-padding col-md-12">
+          <div class="col-md-10">
+            <%= f.fields_for :images do |image| %>
+              <%= render 'image_fields', :f => image %>
+            <% end %>
+            <div class="image_drop"></div>      
+          </div>
+          <div class="col-md-2">
+            
+            <div class="pull-left">
+              <%= link_to_add_association '<div class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Image</div>'.html_safe, f, :images, :class => 'add-btn', partial: 'image_fields', :"data-association-insertion-node" => ".image_drop", 'data-association-insertion-method' => 'append' %>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr/>
+  <% end %>
+
+  <div class="form-group">
+    <div class="">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                venues_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $("#state_select").on("change", function(){
+      var select = $(this); 
+      if(select.val() == ''){ return; }
+
+      $.ajax({
+        // 'http://www.lvh.me:3000/states/3/local_govts'
+        url: '/states/'+ select.val() +'/local_govts',
+        type: 'GET',
+        format: 'json',
+        success: function(resp){
+          var select_tag = $("#venue_local_govt_area_id");
+          var option = "";
+          for (var i = 0; i < resp.length; i++) {
+            option += "<option value="+resp[i].id+">"+resp[i].lga+"</option>";
+          };
+          select_tag.empty().append(option);
+        },
+        error: function(err){console.log(err.responseText)}
+      });
+
+
+    });//    
+
+  })
+</script>

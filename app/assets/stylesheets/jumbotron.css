@@ -1,0 +1,46 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.jumbotron div {
+	text-align: center;
+}
+
+#main {
+	background-image: url("http://demo.themeregion.com/trade-updated/images/bg/main.png");
+  background-repeat: no-repeat;
+	background-color: #f4f4f4;
+	padding: 20px;
+  margin-top: -20px;
+  margin-bottom: -20px;	
+}
+
+#main.published-page {
+	padding: 64px 0 79px;
+}
+
+.congratulations {
+	background-color: #fff;
+	padding: 100px;
+	padding-bottom: 115px;
+	border-radius: 4px;
+}
+
+.congratulations i {
+  font-size: 72px;
+  color: #00a651;
+  margin-bottom: 18px;
+}
+
+.congratulations h4 {
+    color: #b0b0b0;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+}
+
+.congratulations  p{
+	margin-top: 10px;
+}
