@@ -17,7 +17,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise', '~> 3.5', '>= 3.5.6'
 gem 'devise_invitable', '~> 1.5.2'
-
+gem 'figaro'
 gem 'friendly_id', '~> 5.1.0'
 gem 'searchkick'
 gem 'cocoon'
