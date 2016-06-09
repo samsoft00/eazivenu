@@ -22,17 +22,17 @@ class Venue < ActiveRecord::Base
 
   #Validation rule when user create
   with_options :if => lambda { |o| o.form_step == "alien"} do |step|
-    step.validates :name, :state_id, :price, :local_govt_area_id, :address, :email, :capacity, presence: true
+    step.validates :name, :about, :state_id, :price, :local_govt_area_id, :address, :email, :capacity, presence: true
     step.validates :phone, presence: true, 
                     numericality: { only_integer: true },
                     length: {minimum: 11}
-
+ 
     step.validates_associated :user, if: -> { c_user.nil? }
     step.before_validation :create_user_and_validate, if: -> { c_user.nil? }
   end
 
   with_options :if => lambda { |o| o.form_step == "user"} do |step|
-    step.validates :name, :state_id, :price, :local_govt_area_id, :address, :capacity, presence: true
+    step.validates :name, :about, :state_id, :price, :local_govt_area_id, :address, :capacity, presence: true
     step.validates :phone, presence: true, 
                     numericality: { only_integer: true },
                     length: {minimum: 11}
