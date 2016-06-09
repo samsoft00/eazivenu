@@ -13,7 +13,7 @@ namespace :db_seeder do
   	# ActiveRecord::Migration.drop_table(:schema_migrations)
   	#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   	# ActiveRecord::Base.connection.execute('SET foreign_key_checks = 1')
-  	Rake::Task["db:migrate"].execute
+  	# Rake::Task["db:migrate"].execute
 
 	[
 		{:state => "Abia"}, 
