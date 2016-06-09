@@ -50,6 +50,9 @@ class Venue < ActiveRecord::Base
     ]
   end
 
+  #scoping
+  scope :active, -> {where(:status => 'complete')}
+
   def create_user_and_validate
     if self.form_step == 'alien'#self.new_record?
       user_record = self.build_user
@@ -67,6 +70,10 @@ class Venue < ActiveRecord::Base
       user.errors.each{|attr,msg| errors.add(attr.to_sym,"#{msg}")}
     end
     return false unless user.errors.blank?
+  end
+
+  def is_incomplete?
+    self.status == "uncomplete"
   end
 
 

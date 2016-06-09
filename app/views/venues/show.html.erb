@@ -11,7 +11,7 @@
 </style>
 
 <%- model_class = Venue -%>
-<div class="page-header">
+<div class="page-header" style="margin: 15px 0 20px;">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -42,8 +42,10 @@
 
 <div id="main" class="main-container">
   <div class="container">
+    
     <div class="section slider">          
       <div class="row">
+        <%= render 'shared/flash_message' %>
         <!-- carousel -->
         <div class="col-md-7">
           <div id="product-carousel" class="carousel slide" data-ride="carousel">
@@ -51,7 +53,7 @@
             <ol class="carousel-indicators">
               <% @venue.images.each_with_index do |image, index| %>
                 <li data-target="#product-carousel" data-slide-to="<%= index %>" class="">
-                  <%= attachment_image_tag(image, :thumbnail, :limit, 105, 104, class: "img-responsive") %>
+                  <%= attachment_image_tag(image, :thumbnail, :fill, 105, 104, class: "img-responsive") %>
                 </li>
               <% end %>
             </ol>
@@ -63,7 +65,7 @@
                 <div class="item <%= index.to_i == 0 ? 'active' : '' %>">
                   <div class="carousel-image">
                     <!-- image-wrapper -->
-                    <%= attachment_image_tag(image, :thumbnail, :limit, 614, 409, class: "img-responsive") %>
+                    <%= attachment_image_tag(image, :thumbnail, :fill, 614, 409, class: "img-responsive") %>
                   </div>
                 </div>
 
@@ -99,18 +101,11 @@
             
             <!-- short-info -->
             <div class="short-info">
-              <h4 class="page-header">Venue Info</h4>
-              <p><strong>State: </strong><%= "#{@venue.state.state} State" %> </p>
-              <p><strong>Local Govt Area: </strong><%= "#{@venue.state.local_govt_area.lga} Local Govt. Area" %></p>
+              <h4 class="page-header">Venue Location</h4>
               <p><strong>Address: </strong><%= @venue.address %></p>
-            </div><!-- short-info -->
-
-            <div class="short-info">
-              <h4 class="page-header">Facilities Info</h4>
-              <% @venue.facilities.each do |facility| %>
-                <p><strong><%= "#{facility.key}:" %> </strong><%= facility.value %> </p>
-              <% end %>
-            </div><!-- short-info -->            
+              <p><strong>LGA: </strong><%= "#{@venue.state.local_govt_area.lga} Local Govt. Area" %></p>
+              <p><strong>State: </strong><%= "#{@venue.state.state} State" %> </p>
+            </div><!-- short-info -->           
             
             <!-- contact-with -->
             <div class="contact-with">
@@ -120,9 +115,9 @@
                 <span class="hide-text">Click to show phone number </span> 
                 <span class="hide-number"><%= @venue.phone %></span>
               </span>
-              <a href="#" class="btn"><i class="fa fa-envelope-square"></i>Book Venue</a>
+              <a href="#" class="btn" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope-square"></i> Book Venue</a>
             </div><!-- contact-with -->
-            
+
             <!-- social-links -->
             <div class="social-links">
               <h4>Share this ad</h4>
@@ -139,9 +134,88 @@
         </div><!-- slider-text -->        
       </div>        
     </div>
+    
+    <div class="description-info">
+      <div class="row">
+        <!-- description -->
+        <div class="col-md-12">
+          <div class="description">
+            <h4>About <%= @venue.name %></h4>
+            <p><%= @venue.about %></p>
+
+            <h4 class="page-header">Facilities Info</h4>
+            <ul>
+              <% @venue.facilities.each do |facility| %>
+                <li><%= "#{facility.key} #{facility.value}" %></li>
+              <% end %>
+            </ul>
+
+          </div>
+        </div><!-- description -->
+
+        <!-- description-short-info -->
+      </div><!-- row -->
+    </div>
+
+  </div>
+</div>
+<!-- Booking Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Book Venue</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Booking Form -->
+        <%= form_for @booking, url: book_venue_venue_path(id: @venue.id), method: :post  do |f| %>
+          <%= f.hidden_field(:venue_id, :value => @venue.id) %>
+          <div class="form-group">
+            <%= f.label :name, class: "control-label" %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.label :phone, class: "control-label" %>
+                <%= f.text_field :phone, class: "form-control" %>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :email, class: "control-label" %>
+                <%= f.text_field :email, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.label :from, class: "control-label" %>
+                <%= f.date_field :from, class: "form-control" %>                
+              </div>
+              <div class="col-md-6">
+                <%= f.label :to, class: "control-label" %>
+                <%= f.date_field :to, class: "form-control" %>                
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :category_id, class: "control-label" %>
+            <%= f.select(:category_id, options_for_select(Category.all().collect{|cat| [cat.name,cat.id]}), {include_blank: 'Select Category'}, html_options = {:class => "form-control"}) %>
+          </div>
+          <div class="form-group action">
+            <%= f.submit "Request to Book", class: "btn btn-default" %>
+          </div>    
+        <% end %>
+        <!-- End of Booking Form -->  
+      </div>
+
+    </div>
   </div>
 </div>
 
+<!-- End of Booking Modal -->  
 
 <script>
   $('.show-number').on('click', function() {

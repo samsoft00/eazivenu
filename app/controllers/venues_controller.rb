@@ -11,6 +11,7 @@ class VenuesController < ApplicationController
   # GET /venues/1
   # GET /venues/1.json
   def show
+    @booking = Booking.new
   end
 
   # GET /venues/new
@@ -18,6 +19,7 @@ class VenuesController < ApplicationController
     @venue = Venue.new
     2.times {@venue.facilities.build} if @venue.new_record?
     4.times {@venue.images.build} if @venue.new_record?
+
   end
 
   # GET /venues/1/edit
@@ -35,7 +37,7 @@ class VenuesController < ApplicationController
          # @venue.event_types << params[:category]
          @venue.category_ids=(params[:category]) unless params[:category].empty? or params[:category].nil?
         format.html { 
-            redirect_to (user_type == "alien") ? venue_created_path : @venue, 
+            redirect_to (user_type == "alien") ? venue_created_venues_path : @venue, 
             notice: 'Venue was successfully created.' }
         format.json { render :show, status: :created, location: @venue }
       else
@@ -50,6 +52,7 @@ class VenuesController < ApplicationController
   # PATCH/PUT /venues/1.json
   def update
     respond_to do |format|
+      @venue.status = "complete" if @venue.is_incomplete?
       if @venue.update(venue_params)
         format.html { redirect_to @venue, notice: 'Venue was successfully updated.' }
         format.json { render :show, status: :ok, location: @venue }
@@ -74,6 +77,19 @@ class VenuesController < ApplicationController
     @venues = Venue.all()
   end  
 
+  def booking
+    @booking = Booking.new(book_params)
+    byebug
+    respond_to do |format|
+      if @booking.save
+        format.html { redirect_to :back, notice: 'Booking request was sent successfully.' }
+      else
+        format.html {  redirect_to :back, @booking.errors }
+      end
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_venue
@@ -82,6 +98,11 @@ class VenuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def venue_params
-      params.require(:venue).permit(:name, :slug, :price, :state_id, :local_govt_area_id, :address, :phone, :email, :capacity, facilities_attributes: [:id, :key, :value], images_attributes: [:id,:thumbnail, :thumbnail_id, :thumbnail_cache_id,:_destroy])
+      params.require(:venue).permit(:name, :about, :slug, :price, :state_id, :local_govt_area_id, :address, :phone, :email, :capacity, facilities_attributes: [:id, :key, :value], images_attributes: [:id,:thumbnail, :thumbnail_id, :thumbnail_cache_id,:_destroy])
     end
+
+    def book_params
+      params.require(:booking).permit(:name, :phone, :email, :from, :to, :venue_id, :category_id)
+    end
+
 end

@@ -3,6 +3,18 @@ namespace :db_seeder do
   task state: :environment do
   	puts "#{'*'*(`tput cols`.to_i)}\nChecking Environment... The database will be cleared of all content before populating.\n#{'*'*(`tput cols`.to_i)}"
 
+  	#delete state and run migration
+  	#SET foreign_key_checks = 0;
+  	#SET foreign_key_checks = 1;
+  	# ActiveRecord::Base.connection.execute('SET foreign_key_checks = 0')
+  	#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  	# ActiveRecord::Migration.drop_table(:states)
+  	# ActiveRecord::Migration.drop_table(:local_govt_areas)
+  	# ActiveRecord::Migration.drop_table(:schema_migrations)
+  	#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  	# ActiveRecord::Base.connection.execute('SET foreign_key_checks = 1')
+  	Rake::Task["db:migrate"].execute
+
 	[
 		{:state => "Abia"}, 
 		{:state => "Adamawa"}, 
@@ -46,6 +58,8 @@ namespace :db_seeder do
 		end
 
 		puts "#{'*'*(`tput cols`.to_i)}\nThe database has been populated!\n#{'*'*(`tput cols`.to_i)}"
+
+		Rake::Task["db_seeder:lga"].execute
 
   end
 

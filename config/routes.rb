@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   end
 
   resources :venues, path: :venue, path_names: { new: 'add_venue' } do
+    member do
+      post 'book', to: 'venues#booking', as: 'book_venue'
+    end
+
     collection do
       get 'venue_created', controller: 'pages', as: :venue_created
     end

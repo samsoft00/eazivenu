@@ -11,12 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604210158) do
+ActiveRecord::Schema.define(version: 20160609071247) do
+
+  create_table "bookings", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "phone",       limit: 255
+    t.string   "email",       limit: 255
+    t.date     "from"
+    t.date     "to"
+    t.integer  "venue_id",    limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "category_id", limit: 4
+  end
+
+  add_index "bookings", ["category_id"], name: "index_bookings_on_category_id", using: :btree
+  add_index "bookings", ["venue_id"], name: "index_bookings_on_venue_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string "name", limit: 255
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -98,11 +111,13 @@ ActiveRecord::Schema.define(version: 20160604210158) do
     t.string   "phone",              limit: 255
     t.integer  "event_type_id",      limit: 4
     t.string   "capacity",           limit: 255
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "slug",               limit: 255
     t.integer  "user_id",            limit: 4
     t.string   "price",              limit: 255
+    t.text     "about",              limit: 65535
+    t.string   "status",             limit: 255
   end
 
   add_index "venues", ["event_type_id"], name: "index_venues_on_event_type_id", using: :btree
@@ -110,6 +125,8 @@ ActiveRecord::Schema.define(version: 20160604210158) do
   add_index "venues", ["state_id"], name: "index_venues_on_state_id", using: :btree
   add_index "venues", ["user_id"], name: "index_venues_on_user_id", using: :btree
 
+  add_foreign_key "bookings", "categories"
+  add_foreign_key "bookings", "venues"
   add_foreign_key "event_types", "categories"
   add_foreign_key "event_types", "venues"
   add_foreign_key "facilities", "venues"

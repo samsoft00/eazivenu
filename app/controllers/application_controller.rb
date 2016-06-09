@@ -5,11 +5,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
 		def after_sign_in_path_for(resource)
-			# if is_admin?(resource)
-			# 	dashboard_index_path
-			# else
-			# 	root_path
-			# end
+			# byebug
+			if is_admin?(resource)
+				return edit_venue_path(id: resource.venues.first.slug) if resource.venues.first.is_incomplete?
+				return dashboard_index_path
+			else
+				return edit_venue_path(resource.venues.first.slug) if resource.venues.first.is_incomplete?
+				return venues_path
+			end
 			venues_path
 
 		end
