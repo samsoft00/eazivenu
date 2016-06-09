@@ -30,7 +30,8 @@ class VenuesController < ApplicationController
   # POST /venues.json
   def create
     user_type = current_user ? "user" : "alien"
-    @venue = Venue.new(venue_params.merge(c_user: current_user, form_step: user_type))
+    status = user_type == "user" ? "complete" : "uncomplete"
+    @venue = Venue.new(venue_params.merge(c_user: current_user, form_step: user_type, status: status))
     
     respond_to do |format|
       if @venue.save
