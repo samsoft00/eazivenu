@@ -1,0 +1,39 @@
+<style type="text/css">
+  .venue_name{
+    display: block;
+    font-size: 16px;
+    line-height: 20px;
+  }
+</style>
+
+<%- model_class = Booking -%>
+<div class="page-header" style="margin: 15px 0 20px;">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-md-8">
+        <h1><%= "#Bookings Details" %><span class="venue_name"><strong class="btn btn-default btn-xs">Venue:</strong> <%= @venue.name %></span></h1>    
+      </div>
+      
+      <div class="col-md-4">      
+        <h1 class=" pull-right">
+          <%= link_to t('.back', :default => t("helpers.links.back")),
+                         venue_bookings_path(@venue), :class => 'btn btn-default'  %>
+        </h1>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div id="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2" style="background-color:#fff;padding:50px 30px;border-radius:5px">
+
+        <%= @booking.inspect %>
+        
+      </div>
+    </div>
+  </div>
+</div>

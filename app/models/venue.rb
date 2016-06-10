@@ -10,6 +10,7 @@ class Venue < ActiveRecord::Base
   has_many :images, dependent: :destroy
   has_many :event_types
   has_many :categories, through: :event_types
+  has_many :bookings
 
   attr_accessor :c_user, :form_step, :email
 
@@ -74,6 +75,21 @@ class Venue < ActiveRecord::Base
 
   def is_incomplete?
     self.status == "uncomplete"
+  end
+
+  #scoping venues and booking using current_user
+  def self.get_venue_bookings(current_user)
+    bookings = []
+    if !current_user.nil?
+      current_user.venues.each do |venue|
+        venue.bookings.each {|book| bookings.push(book)}
+      end
+    end
+    bookings
+  end
+
+  def get_no_bookings
+    self.bookings.count
   end
 
 

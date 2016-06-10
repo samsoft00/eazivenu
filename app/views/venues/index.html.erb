@@ -7,10 +7,17 @@
         <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>    
       </div>
       
-      <div class="col-md-6">
-        <h1><%= link_to t('.new', :default => t("helpers.links.new")),
-            new_venue_path,
-            :class => 'btn btn-primary pull-right' %></h1>
+      <div class="col-md-6">      
+        <h1 class=" pull-right">
+          <%= link_to "", class:"btn btn-warning", type:"button" do %>
+            Bookings: <span class="badge"><%= Venue.get_venue_bookings(current_user).count %></span>
+          <% end %>
+<!--      <button class="btn btn-warning" type="button">
+            Bookings: <span class="badge">₦650000</span>
+          </button>         -->
+          <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_venue_path, :class => 'btn btn-primary' %>
+        </h1>
       </div>
 
     </div>
@@ -26,6 +33,7 @@
         <th><%= model_class.human_attribute_name(:state_id) %></th>
         <th><%= model_class.human_attribute_name(:phone) %></th>
         <th><%= model_class.human_attribute_name(:capacity) %></th>
+        <th>Bookings</th>
         <th><%= model_class.human_attribute_name(:created_at) %></th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
@@ -38,6 +46,13 @@
           <td><%= "#{venue.state.state} State" %></td>
           <td><%= venue.phone %></td>
           <td><%= venue.capacity %></td>
+          <td>
+            <% if venue.get_no_bookings %>
+              <%= link_to "View Bookings", venue_bookings_path(venue), :class => 'btn btn-default btn-xs' %>
+            <% else %>
+              <p>No Booking</p>
+            <% end %>
+            </td>
           <td><%= venue.created_at.strftime("%B %d, %Y") %></td>
           <td>
             <%= link_to t('.show', :default => t("helpers.links.show")),

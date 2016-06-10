@@ -17,18 +17,21 @@ Rails.application.routes.draw do
   end
 
   resources :venues, path: :venue, path_names: { new: 'add_venue' } do
-    member do
-      post 'book', to: 'venues#booking', as: 'book_venue'
-    end
+    # member do
+      # post 'book', to: 'venues#booking', as: 'book_venue'
+    resources :bookings, path: :booking#, only: [:index, :show, :create]#, as: 'book_venue'
+    # end
 
     collection do
       get 'venue_created', controller: 'pages', as: :venue_created
     end
   end
+  
   scope '/dashboard' do
     get '/',  to: 'dashboard#index', as: :dashboard
-    # resources :venues
+    resources :bookings, path: :booking, only: [:index, :show]
   end
+
   get 'search_venue', to: "venues#search"
   root to: 'pages#index', controller: 'pages'
 

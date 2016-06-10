@@ -1,0 +1,57 @@
+<%- model_class = Booking -%>
+<div class="page-header" style="margin: 15px 0 20px;">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-md-8">
+        <h1><%= "#{@venue.name}'s Bookings" %></h1>    
+      </div>
+      
+      <div class="col-md-4">      
+        <h1 class=" pull-right">
+          <%= link_to "", class:"btn btn-warning", type:"button" do %>
+            Bookings: <span class="badge"><%= @venue.bookings.count %></span>
+          <% end %>
+          <%= link_to t('.back', :default => t("helpers.links.back")),
+                        venues_path, :class => 'btn btn-default'  %>
+        </h1>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>S/N</th>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:phone) %></th>
+        <th><%= model_class.human_attribute_name(:email) %></th>
+        <th><%= model_class.human_attribute_name(:from) %></th>
+        <th><%= model_class.human_attribute_name(:to) %></th>
+        <th><%= model_class.human_attribute_name(:category_id) %></th>
+        <th>Booked Date</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @venue.bookings.each_with_index do |booking, index| %>
+        <tr>
+          <td><%= index+1  %></td>
+          <td><%= booking.name %></td>
+          <td><%= booking.phone %></td>
+          <td><%= booking.email %></td>
+          <td><%= booking.from %></td>
+          <td><%= booking.to %></td>
+          <td><%= booking.category.name %></td>
+          <td><%= booking.created_at.strftime("%B %d, %Y") %></td>
+          <td>
+            <%= link_to "show", "/venue/#{@venue.slug}/booking/#{booking.id}", :class => 'btn btn-default btn-xs' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
