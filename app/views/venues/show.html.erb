@@ -169,7 +169,7 @@
       </div>
       <div class="modal-body">
         <!-- Booking Form -->
-        <%= form_for @booking, url: book_venue_venue_path(id: @venue.id), method: :post  do |f| %>
+        <%= form_for @booking, url: venue_bookings_path(venue_id: @venue.id), method: :post  do |f| %>
           <%= f.hidden_field(:venue_id, :value => @venue.id) %>
           <div class="form-group">
             <%= f.label :name, class: "control-label" %>

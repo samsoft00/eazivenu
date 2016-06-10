@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :venues, path: :venue, path_names: { new: 'add_venue' } do
     # member do
       # post 'book', to: 'venues#booking', as: 'book_venue'
-    resources :bookings, path: :booking#, only: [:index, :show, :create]#, as: 'book_venue'
+    resources :bookings, path: :booking, only: [:index, :show, :create]#, as: 'book_venue'
     # end
 
     collection do

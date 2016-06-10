@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+ruby '2.1.7'
 gem 'rails', '4.2.6'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
 gem 'sass-rails', '~> 5.0'
