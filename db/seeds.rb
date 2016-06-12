@@ -1,20 +1,20 @@
 #Events Categories
-# [
-# 	"Multi-purpose Hall",
-# 	"Garden",
-# 	"Conference Center",
-# 	"Field",
-# 	"Auditorium",
-# 	"Civic Center",
-# 	"Pool Side",
-# 	"Open Lawn",
-# 	"Open Space",
-# 	"Hotel Event Hall",
-# 	"Club Hall",
-# 	"Marquee",
-# ].each do |param|
-# 	Category.find_or_create_by(name: param)
-# end
+[
+	{:name => "Multi-purpose Hall"},
+	{:name => "Garden"},
+	{:name => "Conference Center"},
+	{:name => "Field"},
+	{:name => "Auditorium"},
+	{:name => "Civic Center"},
+	{:name => "Pool Side"},
+	{:name => "Open Lawn"},
+	{:name => "Open Space"},
+	{:name => "Hotel Event Hall"},
+	{:name => "Club Hall"},
+	{:name => "Marquee"}
+].each do |param|
+	Category.find_or_create_by(name: param)
+end
 
 #Configuration Settings
 [
