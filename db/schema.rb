@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610173724) do
+ActiveRecord::Schema.define(version: 20160610212915) do
 
   create_table "bookings", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -64,6 +64,13 @@ ActiveRecord::Schema.define(version: 20160610173724) do
   end
 
   add_index "local_govt_areas", ["state_id"], name: "index_local_govt_areas_on_state_id", using: :btree
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "config_key",   limit: 255
+    t.boolean  "config_value"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "states", force: :cascade do |t|
     t.string "state", limit: 255

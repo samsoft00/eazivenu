@@ -1,19 +1,26 @@
 #Events Categories
+# [
+# 	"Multi-purpose Hall",
+# 	"Garden",
+# 	"Conference Center",
+# 	"Field",
+# 	"Auditorium",
+# 	"Civic Center",
+# 	"Pool Side",
+# 	"Open Lawn",
+# 	"Open Space",
+# 	"Hotel Event Hall",
+# 	"Club Hall",
+# 	"Marquee",
+# ].each do |param|
+# 	Category.find_or_create_by(name: param)
+# end
+
+#Configuration Settings
 [
-	"Multi-purpose Hall",
-	"Garden",
-	"Conference Center",
-	"Field",
-	"Auditorium",
-	"Civic Center",
-	"Pool Side",
-	"Open Lawn",
-	"Open Space",
-	"Hotel Event Hall",
-	"Club Hall",
-	"Marquee",
+	{:config_key => "ManagerLoginEnabled"			,:config_value => true}
 ].each do |param|
-	Category.find_or_create_by(name: param)
+	Setting.find_or_create_by(param)
 end
 
 #Demo Venue Lists
@@ -24,5 +31,5 @@ end
 # 	{"name" => "Best Western Starfire Dukeyork Hall", "state_id" => 20, "local_govt_area_id" => 3, "address" => "", "phone" => "08029215033", "event_type_id" => 5, "capacity" => "1300", "price" => "100000", "	user_id" => 1, "about" => "Suitable for corporate events."},
 # 	{"name" => "De Renaissance Event Hall", "state_id" => 18, "local_govt_area_id" => 8, "address" => "", "phone" => "08029666633", "event_type_id" => 1, "capacity" => "200", "price" => "250000", "	user_id" => 1, "about" => "The Venue is stylishly tucked within the serene environment of Alausa district, close to the Lagos state secretariat, Governors office Ikeja, the golf course is a 10mins drive from the hotel and therefore guarantees easy access to major parts of Lagos. The venue is a 15 minutes drive from the Muritala Mohammed international airport and 10minutes from MMA2. Also, next to the venue is the new Ultra Modern Shopping mall with shops like Shopprite, Woolworth, Mr. Price, Tru Worths, Genibendi, Ruff tumble for children naming just a few"},				
 # ].each do |param|
-# 	Venue.create(param)
+# 	Venue.find_or_create_by(param)
 # end

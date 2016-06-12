@@ -38,6 +38,15 @@ class User < ActiveRecord::Base
     pending_any_confirmation {yield}
   end
 
+  #this method is called by devise to check for "active" state of the model
+  def active_for_authentication?
+    #remember to call the super
+    #then put our own check to determine "active" state using 
+    #our own "is_active" column
+    m_setting = Setting.find_by_config_key("ManagerLogin")
+    super and m_setting.config_value #self.is_active?
+  end  
+
 	private
 
 		def downCaseParams

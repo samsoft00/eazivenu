@@ -77,6 +77,14 @@ class Venue < ActiveRecord::Base
     self.status == "uncomplete"
   end
 
+  def self.get_all_bookings
+    bookings = []
+    self.all.each do |venues|
+      venues.bookings.each {|book| bookings.push(book)}
+    end
+    bookings
+  end
+
   #scoping venues and booking using current_user
   def self.get_venue_bookings(current_user)
     bookings = []

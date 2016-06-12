@@ -18,7 +18,7 @@
       <div class="col-md-4">      
         <h1 class=" pull-right">
           <%= link_to t('.back', :default => t("helpers.links.back")),
-                         venue_bookings_path(@venue), :class => 'btn btn-default'  %>
+                         request.referrer || venue_bookings_path(@venue), :class => 'btn btn-default'  %>
         </h1>
       </div>
 

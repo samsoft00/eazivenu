@@ -3,47 +3,43 @@
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Booking</a></li>
-        <li><a href="#">Settings</a></li>
+        <li><%= link_to "Settings", settings_path %></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h1 class="page-header">EasiVenu Dashboard</h1>
 
-      <h2 class="sub-header">Section title</h2>
+      <h2 class="sub-header">Venue Bookings</h2>
       <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
+              <th>Name </th>
+              <th>Phone </th>
+              <th>Email </th>
+              <th>From </th>
+              <th>To </th>
+              <th>Category </th>
+              <th>Booked Date</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
           <tbody>
+            <% @bookings.each_with_index do |booking, index| %>
             <tr>
-              <td>1,013</td>
-              <td>torquent</td>
-              <td>per</td>
-              <td>conubia</td>
-              <td>nostra</td>
+              <td><%= index+1  %></td>
+              <td><%= booking.name %></td>
+              <td><%= booking.phone %></td>
+              <td><%= booking.email %></td>
+              <td><%= booking.from %></td>
+              <td><%= booking.to %></td>
+              <td><%= booking.category.name %></td>
+              <td><%= booking.created_at.strftime("%B %d, %Y") %></td>
+              <td>
+                <%= link_to "show", "/venue/#{booking.venue.slug}/booking/#{booking.id}", :class => 'btn btn-default btn-xs' %>
+              </td>
             </tr>
-            <tr>
-              <td>1,014</td>
-              <td>per</td>
-              <td>inceptos</td>
-              <td>himenaeos</td>
-              <td>Curabitur</td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>sodales</td>
-              <td>ligula</td>
-              <td>in</td>
-              <td>libero</td>
-            </tr>
+            <% end %>
           </tbody>
         </table>
       </div>
