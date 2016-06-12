@@ -18,7 +18,7 @@
 
 #Configuration Settings
 [
-	{:config_key => "ManagerLoginEnabled"			,:config_value => true}
+	{:config_key => "ManagerLogin"			,:config_value => true}
 ].each do |param|
 	Setting.find_or_create_by(param)
 end
