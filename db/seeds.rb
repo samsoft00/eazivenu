@@ -13,7 +13,7 @@
 	{:name => "Club Hall"},
 	{:name => "Marquee"}
 ].each do |param|
-	Category.find_or_create_by(name: param)
+	Category.find_or_create_by(param)
 end
 
 #Configuration Settings
